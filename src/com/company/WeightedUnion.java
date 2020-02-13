@@ -14,44 +14,34 @@ public class WeightedUnion implements UnionFind {
         for(int i=0 ; i<sizeOfTree.length ; i++ ) sizeOfTree[i]=1;
     }
 
+    private void joinTrees(int smallestTree, int biggestTree){
+        pointSets[smallestTree] = pointSets[biggestTree];
+        sizeOfTree[biggestTree] = sizeOfTree[biggestTree] + sizeOfTree[smallestTree];
+    }
+
     @Override
     public void union(int p, int q) {
-        //joins the first tree to the second tree
-        int topOfP = findTop(p);
-        int topOfQ = findTop(q);
+        //joins the smallest tree to the largest tree
+        int topOfP = find(p);
+        int topOfQ = find(q);
         if(topOfP != topOfQ) {
-            if(sizeOfTree[topOfP] <= sizeOfTree[topOfQ] ) {
-                pointSets[topOfP] = pointSets[topOfQ];
-                sizeOfTree[topOfQ] = sizeOfTree[topOfQ] + sizeOfTree[topOfP];
-            }
-
-            if(sizeOfTree[topOfQ] < sizeOfTree[topOfP] ){
-                pointSets[topOfQ] = pointSets[topOfP];}
-                sizeOfTree[topOfP] = sizeOfTree[topOfQ] + sizeOfTree[topOfP];
-
-            count--;
+            if(sizeOfTree[topOfP] <= sizeOfTree[topOfQ] ) joinTrees(topOfP,topOfQ);
+            if(sizeOfTree[topOfQ] < sizeOfTree[topOfP] ) joinTrees(topOfQ,topOfP);
+        count--;
         }
     }
 
     @Override
     public int find(int p) {
-        return pointSets[p];
-
-    }
-
-    @Override
-    public int findTop(int p) {
         //finds the top of the tree
         while(p != pointSets[p])
             p=pointSets[p];
         return pointSets[p];
-
     }
-
 
     @Override
     public boolean connected(int p, int q) {
-        if(findTop(p) == findTop(q)) return true;
+        if(find(p) == find(q)) return true;
         return false;
     }
 

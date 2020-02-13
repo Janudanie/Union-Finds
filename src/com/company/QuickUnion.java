@@ -4,7 +4,6 @@ public class QuickUnion implements UnionFind {
     private int count;
     private int[] pointSets;
 
-
     public QuickUnion (int count){
         this.count=count;
         this.pointSets = new int[count];
@@ -13,9 +12,9 @@ public class QuickUnion implements UnionFind {
 
     @Override
     public void union(int p, int q) {
-        //joins the first tree to the second tree
-        int topOfP = findTop(p);
-        int topOfQ = findTop(q);
+        //joins the tree 'p' to the tree 'q'
+        int topOfP = find(p);
+        int topOfQ = find(q);
         if(topOfP != topOfQ) {
             pointSets[topOfP] = pointSets[topOfQ];
             count--;
@@ -24,23 +23,14 @@ public class QuickUnion implements UnionFind {
 
     @Override
     public int find(int p) {
-        return pointSets[p];
-
-    }
-
-    @Override
-    public int findTop(int p) {
-        //finds the top of the tree
         while(p != pointSets[p])
             p=pointSets[p];
         return pointSets[p];
-
     }
-
 
     @Override
     public boolean connected(int p, int q) {
-        if(findTop(p) == findTop(q)) return true;
+        if(find(p) == find(q)) return true;
         return false;
     }
 

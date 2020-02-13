@@ -6,15 +6,15 @@ public class Main {
 	// write your code here
         int N = 10;
 
-        QuickUnion alextest = new QuickUnion(N);
+        QuickUnion nodes = new QuickUnion(N);
 
-        alextest.union(2,3);
-        alextest.union(3,4);
-        alextest.union(5,6);
+        nodes.union(2,3);
+        nodes.union(3,4);
+        nodes.union(5,6);
 
-        alextest.union(5,2);
+        nodes.union(5,2);
 
-        System.out.println(alextest.count());
+        System.out.println(nodes.count());
 
         for (int x = 0 ; x < 10 ;x++)
             System.out.print(x + " ");
@@ -23,7 +23,7 @@ public class Main {
 
         for (int i = 0 ; i < N;i++)
         {
-            System.out.print(alextest.find(i)+ " ");
+            System.out.print(nodes.find(i)+ " ");
         }
     }
 }
